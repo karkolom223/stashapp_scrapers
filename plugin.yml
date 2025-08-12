@@ -1,0 +1,63 @@
+name: "JAVVR"
+
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - javvr.net
+    scraper: sceneScraper
+
+movieByURL:
+  - action: scrapeXPath
+    url:
+      - javvr.net
+    scraper: movieScraper
+
+xPathScrapers:
+  sceneScraper:
+    common:
+      $info: &infoSel //div[contains(@class,"post")]
+      $url: &urlSel //link[@rel="canonical"]/@href
+    scene:
+      Title:
+        selector: $info//h1[contains(@class,"post-title")]
+        postProcess:
+          - strip
+      Date:
+        selector: //meta[@property="article:published_time"]/@content
+        postProcess:
+          - parseDate: '%Y-%m-%dT%H:%M:%S%z'
+      Details:
+        selector: $info//div[contains(@class,"entry")]
+        postProcess:
+          - strip
+      Tags:
+        Name: $info//a[@rel="tag"]/text()
+      Performers:
+        Name: $info//a[contains(@href,"/actor/")]/text()
+      Studio:
+        Name:
+          selector: //div[contains(@class,"breadcrumb")]//a[last()-1]/text()
+          postProcess:
+            - strip
+      Image:
+        selector: $info//div[contains(@class,"entry")]//img/@src
+        postProcess:
+          - strip
+
+  movieScraper:
+    common:
+      $info: *infoSel
+      $url: *urlSel
+    movie:
+      Name: $info//h1[contains(@class,"post-title")]
+      Duration: $info//div[contains(text(),"Duration")]/following-sibling::div/text()
+      Date: //meta[@property="article:published_time"]/@content
+      Studio: //div[contains(@class,"breadcrumb")]//a[last()-1]/text()
+      Synopsis: $info//div[contains(@class,"entry")]
+      FrontImage: $info//div[contains(@class,"entry")]//img/@src
+
+driver:
+  cookies: []
+  headers:
+    - Key: User-Agent
+      Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0
