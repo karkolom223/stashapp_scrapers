@@ -1,0 +1,10 @@
+{
+  "id": "javvr.scraper",
+  "name": "JAVVR Scraper",
+  "description": "XPath-based scraper for javvr.net",
+  "version": "1.0.0",
+  "exec": "stash-plugin",
+  "interface": "stash-plugin",
+  "requires": [],
+  "scripts": []
+}
