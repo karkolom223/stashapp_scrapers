@@ -21,7 +21,7 @@ xPathScrapers:
       Title:
         selector: *infoSel//h1[contains(@class,"post-title")]
         postProcess:
-          - strip
+          - strip: true
       Date:
         selector: //meta[@property="article:published_time"]/@content
         postProcess:
@@ -29,7 +29,7 @@ xPathScrapers:
       Details:
         selector: *infoSel//div[contains(@class,"entry")]
         postProcess:
-          - strip
+          - strip: true
       Tags:
         Name: *infoSel//a[@rel="tag"]/text()
       Performers:
@@ -38,11 +38,11 @@ xPathScrapers:
         Name:
           selector: //div[contains(@class,"breadcrumb")]//a[last()-1]/text()
           postProcess:
-            - strip
+            - strip: true
       Image:
         selector: *infoSel//div[contains(@class,"entry")]//img/@src
         postProcess:
-          - strip
+          - strip: true
 
   movieScraper:
     common:
