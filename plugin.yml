@@ -19,7 +19,7 @@ xPathScrapers:
       $url: &urlSel //link[@rel="canonical"]/@href
     scene:
       Title:
-        selector: $info//h1[contains(@class,"post-title")]
+        selector: *infoSel//h1[contains(@class,"post-title")]
         postProcess:
           - strip
       Date:
@@ -27,20 +27,20 @@ xPathScrapers:
         postProcess:
           - parseDate: '%Y-%m-%dT%H:%M:%S%z'
       Details:
-        selector: $info//div[contains(@class,"entry")]
+        selector: *infoSel//div[contains(@class,"entry")]
         postProcess:
           - strip
       Tags:
-        Name: $info//a[@rel="tag"]/text()
+        Name: *infoSel//a[@rel="tag"]/text()
       Performers:
-        Name: $info//a[contains(@href,"/actor/")]/text()
+        Name: *infoSel//a[contains(@href,"/actor/")]/text()
       Studio:
         Name:
           selector: //div[contains(@class,"breadcrumb")]//a[last()-1]/text()
           postProcess:
             - strip
       Image:
-        selector: $info//div[contains(@class,"entry")]//img/@src
+        selector: *infoSel//div[contains(@class,"entry")]//img/@src
         postProcess:
           - strip
 
@@ -49,12 +49,12 @@ xPathScrapers:
       $info: *infoSel
       $url: *urlSel
     movie:
-      Name: $info//h1[contains(@class,"post-title")]
-      Duration: $info//div[contains(text(),"Duration")]/following-sibling::div/text()
+      Name: *infoSel//h1[contains(@class,"post-title")]
+      Duration: *infoSel//div[contains(text(),"Duration")]/following-sibling::div/text()
       Date: //meta[@property="article:published_time"]/@content
       Studio: //div[contains(@class,"breadcrumb")]//a[last()-1]/text()
-      Synopsis: $info//div[contains(@class,"entry")]
-      FrontImage: $info//div[contains(@class,"entry")]//img/@src
+      Synopsis: *infoSel//div[contains(@class,"entry")]
+      FrontImage: *infoSel//div[contains(@class,"entry")]//img/@src
 
 driver:
   cookies: []
